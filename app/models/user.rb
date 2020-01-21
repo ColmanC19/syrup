@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  has_many :questions, :answers, :answer_comments, :question_comments
+  has_many :questions
+  has_many :answers
+  has_many :comments
   attr_accessor :password
   validates_confirmation_of :password
   validates :email, :presence => true, :uniqueness => true
@@ -7,7 +9,7 @@ class User < ApplicationRecord
 
   def encrypt_password
     self.password_salt = BCrypt::Engine.generate_salt
-    self.password_hash = BCrypt::Engine.hash_secret(password,password_salt)
+    self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
   end
 
   def self.authenticate(email, password)

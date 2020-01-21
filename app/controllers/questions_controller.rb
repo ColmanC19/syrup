@@ -3,11 +3,13 @@ class QuestionsController < ApplicationController
 
   # GET /questions
   def index
-    @questions = Question.all
+    @questions = Question.all.sort { |a, b| b.created_at <=> a.created_at }
   end
 
   # GET /questions/1
   def show
+    @question = Question.find(params[:id])
+    @answers =  @question.answers
   end
 
   # GET /questions/new

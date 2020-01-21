@@ -1,27 +1,27 @@
-class AnswerCommentsController < ApplicationController
-  before_action :set_answer_comment, only: [:show, :edit, :update, :destroy]
+class CommentsController < ApplicationController
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
-  # GET /answer_comments
+  # GET /comments
   def index
-    @answer_comments = AnswerComment.all
+    @comments = Comment.all
   end
 
-  # GET /answer_comments/1
+  # GET /comments/1
   def show
   end
 
-  # GET /answer_comments/new
+  # GET /comments/new
   def new
-    @answer_comment = AnswerComment.new
+    @answer_comment = Comment.new
   end
 
-  # GET /answer_comments/1/edit
+  # GET /comments/1/edit
   def edit
   end
 
-  # POST /answer_comments
+  # POST /comments
   def create
-    @answer_comment = AnswerComment.new(answer_comment_params)
+    @answer_comment = Comment.new(answer_comment_params)
 
     if @answer_comment.save
       redirect_to @answer_comment, notice: 'Answer comment was successfully created.'
@@ -30,7 +30,7 @@ class AnswerCommentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /answer_comments/1
+  # PATCH/PUT /comments/1
   def update
     if @answer_comment.update(answer_comment_params)
       redirect_to @answer_comment, notice: 'Answer comment was successfully updated.'
@@ -39,16 +39,16 @@ class AnswerCommentsController < ApplicationController
     end
   end
 
-  # DELETE /answer_comments/1
+  # DELETE /comments/1
   def destroy
     @answer_comment.destroy
-    redirect_to answer_comments_url, notice: 'Answer comment was successfully destroyed.'
+    redirect_to comments_url, notice: 'Answer comment was successfully destroyed.'
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_answer_comment
-      @answer_comment = AnswerComment.find(params[:id])
+      @answer_comment = Comment.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

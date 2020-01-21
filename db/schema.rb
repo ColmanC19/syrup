@@ -10,18 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_21_181059) do
+ActiveRecord::Schema.define(version: 2020_01_21_214651) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "answer_comments", force: :cascade do |t|
-    t.integer "answer_id"
-    t.text "body_text"
-    t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "answers", force: :cascade do |t|
     t.integer "user_id"
@@ -31,12 +23,14 @@ ActiveRecord::Schema.define(version: 2020_01_21_181059) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "question_comments", force: :cascade do |t|
-    t.integer "question_id"
+  create_table "comments", force: :cascade do |t|
+    t.string "imageable_type"
+    t.bigint "imageable_id"
     t.text "body_text"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_comments_on_imageable_type_and_imageable_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -51,17 +45,23 @@ ActiveRecord::Schema.define(version: 2020_01_21_181059) do
     t.string "name"
     t.string "password"
     t.string "email"
+    t.string "password_hash"
+    t.string "password_salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "pasword_hash"
-    t.string "password_salt"
   end
 
-  add_foreign_key "answer_comments", "answers"
-  add_foreign_key "answer_comments", "users"
+  create_table "votes", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "direction"
+    t.string "imageable_type"
+    t.bigint "imageable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["imageable_type", "imageable_id"], name: "index_votes_on_imageable_type_and_imageable_id"
+  end
+
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
-  add_foreign_key "question_comments", "questions"
-  add_foreign_key "question_comments", "users"
   add_foreign_key "questions", "users"
 end
