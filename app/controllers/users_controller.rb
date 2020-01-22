@@ -25,7 +25,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to '/', notice: 'User was successfully created.'
     else
       flash[:alert] = "There was a problem signing up."
       render :new

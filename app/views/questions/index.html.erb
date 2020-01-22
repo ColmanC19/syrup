@@ -5,20 +5,29 @@
 <table>
   <thead>
     <tr>
-      <th>User</th>
-      <th>Body text</th>
       <th>Title</th>
+      <th>Votes</th>
+      <th>↑</th>
+      <th>↓</th>
+      <th>Body text</th>
+      <th>User</th>
       <th>Answers</th>
-      <th colspan="4"></th>
+      <th colspan="7"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @questions.each do |question| %>
       <tr>
-        <td><%= question.user_id %></td>
-        <td><%= question.body_text %></td>
         <td><%= question.title %></td>
+        <% votes = question.votes.to_a %>
+        <% up_votes = votes.select{ |v| v.direction == 'up'}.length %>
+        <% down_votes = votes.select{ |v| v.direction == 'down'}.length %>
+        <td><%= up_votes - down_votes %></td>
+        <td><%= link_to '↑', questions_path(:direction => 'up', :question_id => question.id) %></td>
+        <td><%= link_to '↓', questions_path(:direction => 'down', :question_id => question.id) %></td>
+        <td><%= question.body_text %></td>
+        <td><%= question.user_id %></td>
         <td><%= question.answers.length %></td>
         <td><%= link_to 'Show', question %></td>
         <td><%= link_to 'Edit', edit_question_path(question) %></td>

@@ -3,6 +3,11 @@ class QuestionsController < ApplicationController
 
   # GET /questions
   def index
+    if params[:direction]
+      @question = Question.find(params[:question_id])
+      vote = @question.votes.new({:direction => params[:direction], :user_id => current_user.id})
+      vote.save
+    end
     @questions = Question.all.sort { |a, b| b.created_at <=> a.created_at }
   end
 
